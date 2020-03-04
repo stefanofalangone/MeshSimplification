@@ -257,7 +257,6 @@ void swapEdges(Mesh *m, int i, int j){
 }
 
 int leftArray (Mesh *m, int pos){
-
     if((2*pos)>m->numE) return -1;
     else return (2*pos-1);
 }
@@ -315,22 +314,7 @@ void quicksort(Mesh *m, int left, int right) {
 }
 
 
-void shuffle(Mesh *m){
-  int n=m->numE, tmpPos;
-  Edge *tmpE;
-  Vector *tmpV;
-    if (n > 1)
-    {
-        int i;
-        for (i = 0; i < n - 1; i++)
-        {
-          int j = i + rand() / (RAND_MAX / (n - i) + 1);
-          tmpE = m->e[i]; m->e[i] = m->e[j]; m->e[j] = tmpE;
-          tmpPos = m->e[i]->n; m->e[i]->n = m->e[j]->n; m->e[j]->n = tmpPos;
-          tmpV = m->solutions[i]; m->solutions[i] = m->solutions[j]; m->solutions[j] = tmpV;
-        }
-    }
-}
+
 
 int checkConstrains(Mesh *m, Constraint *c, int n_constraints){ //1 means accepted constraint, 0 refuted
   double a1[3], a2[3], a3[3];
@@ -347,7 +331,7 @@ int checkConstrains(Mesh *m, Constraint *c, int n_constraints){ //1 means accept
       right=norm(a1, 3)*norm(a2, 3)*cosTwoVectors(a1,a2,3);
       right=right*right;
       return (left<right);*/
-      //now my version of this constraint:
+      //now my version of this constraint: (it seems to work better)
       double cosine=cosTwoVectors(a1,a2,3);
       return (cosine*cosine < 0.97);
     case 3:
@@ -357,11 +341,9 @@ int checkConstrains(Mesh *m, Constraint *c, int n_constraints){ //1 means accept
     double *crossProduct=crossProduct3dim(a1, a2);
     left=dotProduct( crossProduct , a3, 3 );
     left=left*left;
-    ////printf("check\n");
     right=norm( crossProduct , 3 ) * norm(a3, 3) * sinTwoVectors3dim(crossProduct, a3);
     right=right*right;
     free(crossProduct);
-    ////printf("check, %d\n", (left > right));
     return (left > right);
     //now my version of constraint
     /*matrix=allocMatrix(3,3);
@@ -1289,7 +1271,6 @@ void writeOutput(Mesh *m){
       fprintf(fp, "%lf %lf %lf\n", m->v[i]->x, m->v[i]->y, m->v[i]->z);
     }
   }
-
   int polygon_n_size=3;
   for(int i=0; i<m->numT; i++){
     if(m->t[i]->isDeleted==0){
@@ -1446,9 +1427,6 @@ int simplification(Mesh *m, int n){
           if(currT->isDeleted==1) printf("FATAL ERROR, v has a deleted triangle\n");
         }
 
-        //trianglesDeleted=trianglesDeleted+2;
-        //Updating coordinates of v1
-        //printf("previous coordinates %lf %lf %lf -> %lf %lf %lf [cost %lf]\n", v1->x, v1->y, v1->z,  m->solutions[i]->x, m->solutions[i]->y, m->solutions[i]->z, m->e[i]->cost );
         double *oldSol=allocVector(3), *newSol=allocVector(3);
         oldSol[0]=v1->x; oldSol[1]=v1->y; oldSol[2]=v1->z;
         newSol[0]=m->solutions[i]->x; newSol[1]=m->solutions[i]->y; newSol[2]=m->solutions[i]->z;
@@ -1458,23 +1436,17 @@ int simplification(Mesh *m, int n){
           v1->y=m->solutions[i]->y;
           v1->z=m->solutions[i]->z;
         }else{
-          trianglesDeletedWithLength+=2; //It's a extimation
+          trianglesDeletedWithLength+=2; /*It's an extimation, might be more. It is only used for analytics */
           calculateSolutionsLength(m, i);
         }
         free(oldSol); free(newSol);
         m->e[i]->isDeleted=1;
         updateCost(m, m->e[i]->v1);
          m->e[i]->v1=-1; m->e[i]->v2=-1; m->e[i]->cost=9999999.99  ;
-        clock_t start, end;
-           double cpu_time_used;
-           start = clock();
         heapify(m, i+1);
-        end = clock();
-           cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
         i=m->numE;
       } else break;
     }
-    //if(i==m->numE-1) break;
     n--;
   }
   printf("AFTER: triangles deleted %d\n", trianglesDeleted);

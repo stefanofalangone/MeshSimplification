@@ -186,13 +186,7 @@ void testMeshSimplification(Mesh *m){
   for(int i=0; i<m->numE; i++) m->calculateSolutions(m, i);
   printf("considered %d arcs, found null solution for %d\n", m->numE, numberOfNullSolutions);
   printf("cases before third constraint with: 0 previous constraints %d, 1 previous constr %d, 2 previous constr %d\n", cases[0], cases[1], cases[2]);
-  clock_t start, end;
-     double cpu_time_used;
-     start = clock();
   quicksort(m, 0, m->numE-1);
-  end = clock();
-     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-  printf("finished quicksort, time needed %lf\n", cpu_time_used);
   //simplification(m, 6*STEP_EDGES_SIMPLIFIED);
   printf("deleted, number of triangles was %d\n", m->numT);
 }
@@ -205,11 +199,11 @@ int main( int argc, char** argv ){
   //strcpy(PATH_FILE, "input/bunny_simple2.off.out");
   strcpy(PATH_FILE, "input/cow.off");
   //strcpy(PATH_FILE, "input/cow.off.out");
-  strcpy(PATH_FILE, "input/homer.off");
-  strcpy(PATH_FILE, "input/torus_simple.off");
-  strcpy(PATH_FILE, "input/bunny.off");
+  //strcpy(PATH_FILE, "input/homer.off");
+  //strcpy(PATH_FILE, "input/torus_simple.off");
+  //strcpy(PATH_FILE, "input/bunny.off");
   //strcpy(PATH_FILE, "input/hand.ply");
-  //strcpy(PATH_FILE, "input/dragon.ply");
+  strcpy(PATH_FILE, "input/dragon.ply");
   int methodChosen=atoi(argv[2]); //0 is calculateSolutionsLength, 1 is calculateSolutionsLindstrom //2 is Garland
   mesh=initialize(methodChosen);
   //testMeshBuilding(mesh);
