@@ -13,7 +13,7 @@ In this work you can choose three possible strategies to simplify your mesh:
 - C compiler, I used gcc  
 - graphics libraries: OpenGL, glu, glut 
 
-**FIRST RUN GUIDE **\
+**FIRST RUN GUIDE** \
 in the shell:\
 a. if you are under Linux, compile with BLABLA \
 a. bis if you are under Mac, compile with BLABLA\
