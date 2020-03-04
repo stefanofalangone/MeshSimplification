@@ -1,8 +1,8 @@
-WHAT IS THIS PROJECT ABOUT?
+WHAT IS THIS PROJECT ABOUT?\
 It is a small project completly written in C during my Computer Graphics's university course.
 Surface Mesh Simplification is the process that reduces the number of faces of a mesh.
 
-STRATEGIES IMPLEMENTED
+STRATEGIES IMPLEMENTED\
 In this work you can choose three possible strategies to simplify your mesh:
 1. Midpoint solution. It is the simplest and fastest way (but be careful, degrades the quality of the mesh quickly. I suggest this strategy only if you need fast performances and have a huge mesh (500k triangles or more) and reduce to no more than 80/83% of triangles).
 2. Lindstrom-Turk solution. This is based on "Fast and Memory Efficient Polygonal Simplification" written by Peter Lindstrom and Greg Turk. Overall, in my opinion, keeps quite a nice form of simplified mesh. Be careful not to reduce to a mesh with less than 200/300 triangles or it can show bizarre aspects.
