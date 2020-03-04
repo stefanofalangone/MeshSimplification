@@ -13,8 +13,8 @@ WHAT IS NEEDED TO RUN THIS CODE?
 - C compiler, I used gcc  
 - graphics libraries: OpenGL, glu, glut 
 
-FIRST RUN GUIDE 
-in the shell:
+FIRST RUN GUIDE \
+in the shell:\
 if you are under Linux, compile with BLABLA 
 If you are under Mac, compile with BLABLA
 Then run with "./a.out lib/bunny.off 1 0.1 0" [lib/bunny.off is the file you are simplifying, 1 indicates Lindstrom-Turk simplification alghoritm (0 for midpoint, 1 Lindstrom-Turk, 2 Garland), 0.1 indicates a check for distance from new solution to old one (a security guard to avoid drastic changes in shape), 0 indicates the number of simplifications per step you wish (0 means default which is approximatively 1/6 of all the triangles, you can choose any integer < n_tringles)]
