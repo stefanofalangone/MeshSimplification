@@ -1315,18 +1315,9 @@ int simplification(Mesh *m, int n){
           return 0;
         }
 
-        curr1=v1->triangles;
         List *commonTriangles=NULL;
-        while(curr1!=NULL){
-          if(contains(v2->triangles, curr1->value)>0 ){
-            commonTriangles=addList(commonTriangles, curr1->value);
-          }
-          curr1=curr1->next;
-        }
-
-        curr1=v2->triangles;
+        commonTriangles=intersectList(v1->triangles, v2->triangles);
         Triangle *currentT;
-
         //if t1 is a common triangle of e1, t2 and t3 are the external triangles that shall now get attached from collapse of t1
         curr=commonTriangles;
         Vertex *v3;
@@ -1372,7 +1363,6 @@ int simplification(Mesh *m, int n){
         //every triangle that was in v2 shall have changed coordinates to v1
         Triangle *currT;
         curr=v2->triangles;
-        int occurrencesV1=0, occurrencesV2=0;
         while(curr!=NULL){
           currT=(Triangle*)curr->value;
           curr=curr->next;
@@ -1380,14 +1370,6 @@ int simplification(Mesh *m, int n){
           else if( currT->v2==m->e[i]->v2 ) currT->v2=m->e[i]->v1;
           else if( currT->v3==m->e[i]->v2 ) currT->v3=m->e[i]->v1;
           else printf("FATAL ERROR\n");
-          if(currT->v1==m->e[i]->v1) occurrencesV1++;
-          if(currT->v2==m->e[i]->v1) occurrencesV1++;
-          if(currT->v3==m->e[i]->v1) occurrencesV1++;
-          if(currT->v1==m->e[i]->v2) occurrencesV2++;
-          if(currT->v2==m->e[i]->v2) occurrencesV2++;
-          if(currT->v3==m->e[i]->v2) occurrencesV2++;
-
-          if(occurrencesV1!=1 || occurrencesV2!=0)  printf("FATAL ERROR in changing coordinates of triangle %d %d %d. occurrencesV1 %d occurrencesV2 %d \n", currT->v1, currT->v2, currT->v3, occurrencesV1, occurrencesV2);
           v1->triangles=addList(v1->triangles, currT);
 
           if (checkTriangleListIntegrity(v1->triangles)==0){
@@ -1399,7 +1381,6 @@ int simplification(Mesh *m, int n){
             deleteTriangle(m, currT);
           }
           v2->triangles=removeList(v2->triangles, currT);
-          occurrencesV1=0; occurrencesV2=0;
         }
 
         curr=v1->e;
@@ -1411,21 +1392,6 @@ int simplification(Mesh *m, int n){
           }
         }
 
-        curr=v1->e;
-        while(curr!=NULL){
-          currE=(Edge*)curr->value;
-          curr=curr->next;
-          if(currE->isDeleted==1){
-            printf("FATAL ERROR, v has a deleted edge\n");
-            v1->e=removeList(v1->e, currE);
-          }
-        }
-        curr=v1->triangles;
-        while(curr!=NULL){
-          Triangle *currT=(Triangle*)curr->value;
-          curr=curr->next;
-          if(currT->isDeleted==1) printf("FATAL ERROR, v has a deleted triangle\n");
-        }
 
         double *oldSol=allocVector(3), *newSol=allocVector(3);
         oldSol[0]=v1->x; oldSol[1]=v1->y; oldSol[2]=v1->z;
