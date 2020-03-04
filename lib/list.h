@@ -23,12 +23,24 @@ List *addList(List *l, void *t){
 
 int contains(List *l, void *c){
   while(l!=NULL){
-    //printf("CONTAINS: l= %p\n", l);
     if(l->value==c) return 1;
     l=l->next;
   }
   return 0;
 }
+
+List *intersectList(List *l1, List *l2){
+  List *curr1=l1;
+  List *intersectionList=NULL;
+  while(curr1!=NULL){
+    if(contains(l2, curr1->value)>0 ){
+      intersectionList=addList(intersectionList, curr1->value);
+    }
+    curr1=curr1->next;
+  }
+  return intersectionList;
+}
+
 
 void deallocList(List *l){
   List *next;
@@ -121,16 +133,4 @@ List *unionList(List *l1, List *l2){
       l2=l2->next;
   }
   return last;
-}
-
-List *intersectList(List *l1, List *l2){
-  if(l1==NULL || l2==NULL) return NULL;
-  List *ret=NULL;
-  while(l1!=NULL){
-    if(contains(l2, l1->value)>0){
-      ret=addList(ret, l1->value);
-    }
-  l1=l1->next;
-  }
-  return ret;
 }

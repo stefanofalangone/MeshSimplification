@@ -183,10 +183,9 @@ void testMeshSimplification(Mesh *m){
     Triangle *t=m->t[i];
     if(t->v1==t->v2 || t->v2==t->v3 || t->v1==t->v3) printf("FATAL ERROR IN BUILDING MESH\n");
   }
-  for(int i=0; i<m->numE; i++) m->calculateSolutions(m, i);
+
   printf("considered %d arcs, found null solution for %d\n", m->numE, numberOfNullSolutions);
   printf("cases before third constraint with: 0 previous constraints %d, 1 previous constr %d, 2 previous constr %d\n", cases[0], cases[1], cases[2]);
-  quicksort(m, 0, m->numE-1);
   //simplification(m, 6*STEP_EDGES_SIMPLIFIED);
   printf("deleted, number of triangles was %d\n", m->numT);
 }
@@ -203,15 +202,15 @@ int main( int argc, char** argv ){
   //strcpy(PATH_FILE, "input/torus_simple.off");
   //strcpy(PATH_FILE, "input/bunny.off");
   //strcpy(PATH_FILE, "input/hand.ply");
-  strcpy(PATH_FILE, "input/dragon.ply");
+  //strcpy(PATH_FILE, "input/dragon.ply");
   int methodChosen=atoi(argv[2]); //0 is calculateSolutionsLength, 1 is calculateSolutionsLindstrom //2 is Garland
   mesh=initialize(methodChosen);
   //testMeshBuilding(mesh);
   MAX_DISTANCE_ALLOWED=atof(argv[3]);
   if(atof(argv[4])>1) STEP_EDGES_SIMPLIFIED=atof(argv[4]);
-  STOPPING_PERCENTAGE=5.0;
+  STOPPING_PERCENTAGE=10.0;
   printf("before simplification\n");
-  testMeshSimplification(mesh);
+  //testMeshSimplification(mesh);
   glutInit(&argc, argv);
   glutInitDisplayMode( GLUT_RGBA | GLUT_DEPTH );
   glutInitWindowPosition( 300, 100 );
