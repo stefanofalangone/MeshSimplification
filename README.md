@@ -15,8 +15,8 @@ In this work you can choose three possible strategies to simplify your mesh:
 
 **FIRST RUN GUIDE** \
 in the shell:\
-a. if you are under Linux, compile with BLABLA \
-a. bis if you are under Mac, compile with BLABLA\
+a. if you are under Linux, compile with `gcc lib/list.h lib/linearAlgebra_lib.h lib/meshData_structure.h lib/meshSimplification.h  main.c -L/usr/X11R6/lib/ -lGL -lGLU -lglut -lm` \
+a. bis if you are under Mac, compile with `gcc lib/list.h lib/linearAlgebra_lib.h lib/meshData_structure.h lib/meshSimplification.h  main.c -w -L/System/Library/Frameworks -framework GLUT -framework OpenGL`\
 b. Run with `./a.out lib/bunny.off 1 0.1 0` [lib/bunny.off is the file you are simplifying, 1 indicates Lindstrom-Turk simplification alghoritm (0 for midpoint, 1 Lindstrom-Turk, 2 Garland), 0.1 indicates a check for distance from new solution to old one (a security guard to avoid drastic changes in shape), 0 indicates the number of simplifications per step you wish (0 means default which is approximatively 1/6 of all the triangles, you can choose any integer < n_tringles)]\
 c. If everything went smooth, you should have opened a new windows with your mesh. You can move with "w a s d" in every direction, zoom in or out "+ -", or can simplify clicking "k" on your keyboard. When you are satisifed with simplification, with the mesh in foreground, click "Esc". It will output and terminate your program.\
 
