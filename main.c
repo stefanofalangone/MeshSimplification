@@ -197,10 +197,9 @@ int main( int argc, char** argv ){
   strcpy(PATH_FILE, "input/bunny_simple2.off");
   //strcpy(PATH_FILE, "input/bunny_simple2.off.out");
   strcpy(PATH_FILE, "input/cow.off");
-  //strcpy(PATH_FILE, "input/cow.off.out");
   //strcpy(PATH_FILE, "input/homer.off");
   //strcpy(PATH_FILE, "input/torus_simple.off");
-  //strcpy(PATH_FILE, "input/bunny.off");
+  strcpy(PATH_FILE, "input/bunny.off");
   //strcpy(PATH_FILE, "input/hand.ply");
   //strcpy(PATH_FILE, "input/dragon.ply");
   int methodChosen=atoi(argv[2]); //0 is calculateSolutionsLength, 1 is calculateSolutionsLindstrom //2 is Garland
@@ -208,7 +207,7 @@ int main( int argc, char** argv ){
   //testMeshBuilding(mesh);
   MAX_DISTANCE_ALLOWED=atof(argv[3]);
   if(atof(argv[4])>1) STEP_EDGES_SIMPLIFIED=atof(argv[4]);
-  STOPPING_PERCENTAGE=10.0;
+  STOPPING_PERCENTAGE=5.0;
   printf("before simplification\n");
   //testMeshSimplification(mesh);
   glutInit(&argc, argv);
