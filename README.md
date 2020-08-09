@@ -1,6 +1,6 @@
 **WHAT IS THIS PROJECT ABOUT?**\
 It is a small project completly written in C during my Computer Graphics's university course.
-Surface Mesh Simplification is the process that reduces the number of faces of a mesh.
+Surface Mesh Simplification is the process that reduces the number of faces of a mesh. IMPORTANT: this code really needs a re-engineering (I didn't because this project revealed itself to be quite huge, maybe in the future I will consider applying clean code practices)
 
 **STRATEGIES IMPLEMENTED**\
 In this work you can choose three possible strategies to simplify your mesh:
